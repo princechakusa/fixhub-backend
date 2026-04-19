@@ -1,8 +1,109 @@
 ﻿<!DOCTYPE html>
-<html>
-<head><title>FixHub Test</title></head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixHub – Maintenance Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
 <body>
-<h1>FixHub Backend is Running</h1>
-<p>If you see this, static files are working.</p>
+
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo">FixHub</div>
+      <h2>Welcome back</h2>
+      <p>Sign in to your account</p>
+    </div>
+    <div id="login-error" class="error-message"></div>
+    <input type="email" id="login-email" placeholder="Email address" autocomplete="email">
+    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+    <button id="login-btn" class="btn-primary">Sign In</button>
+    <div class="login-footer">Need help? Contact <strong>Prince Chakusa</strong></div>
+  </div>
+</div>
+
+<div id="app" style="display: none;">
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">FixHub</div>
+      <button id="collapse-btn" class="icon-btn">‹</button>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <div class="nav-item active" data-view="dashboard"><span class="nav-icon"></span><span class="nav-label">Dashboard</span></div>
+      <div class="nav-item" data-view="tickets"><span class="nav-icon"></span><span class="nav-label">Tickets</span><span class="nav-badge" id="ticket-badge">0</span></div>
+      <div class="nav-item" data-view="users"><span class="nav-icon"></span><span class="nav-label">Users</span></div>
+      <div class="nav-section">Operations</div>
+      <div class="nav-item" data-view="properties"><span class="nav-icon"></span><span class="nav-label">Properties</span></div>
+      <div class="nav-item" data-view="pm"><span class="nav-icon"></span><span class="nav-label">Preventive Maint.</span></div>
+      <div class="nav-item" data-view="vendors"><span class="nav-icon"></span><span class="nav-label">Vendors</span></div>
+      <div class="nav-section">Analytics</div>
+      <div class="nav-item" data-view="finance"><span class="nav-icon"></span><span class="nav-label">Finance</span></div>
+      <div class="nav-item" data-view="reports"><span class="nav-icon"></span><span class="nav-label">Reports</span></div>
+      <div class="nav-item" data-view="performance"><span class="nav-icon"></span><span class="nav-label">Performance</span></div>
+      <div class="nav-item" data-view="sla"><span class="nav-icon"></span><span class="nav-label">SLA Tracker</span></div>
+      <div class="nav-section">System</div>
+      <div class="nav-item" data-view="companies"><span class="nav-icon"></span><span class="nav-label">Companies</span></div>
+      <div class="nav-item" data-view="inventory"><span class="nav-icon"></span><span class="nav-label">Inventory</span></div>
+      <div class="nav-item" data-view="settings"><span class="nav-icon"></span><span class="nav-label">Settings</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="new-ticket-fab" class="btn-primary">+ New Ticket</button>
+      <div class="user-info">
+        <div class="avatar" id="user-avatar">?</div>
+        <div><div class="user-name" id="user-name">Not signed in</div><div class="user-role" id="user-role">—</div></div>
+      </div>
+      <button id="logout-btn" class="btn-outline">Sign Out</button>
+    </div>
+  </aside>
+
+  <main id="main-content">
+    <div class="topbar">
+      <button id="mobile-menu-btn" class="icon-btn">☰</button>
+      <h1 id="page-title">Dashboard</h1>
+      <div class="topbar-right"><span id="live-clock"></span><button id="refresh-btn" class="icon-btn">⟳</button></div>
+    </div>
+    <div id="content-area">
+      <div class="view active" id="view-dashboard">Loading dashboard...</div>
+      <div class="view" id="view-tickets"></div>
+      <div class="view" id="view-users"></div>
+      <div class="view" id="view-properties"></div>
+      <div class="view" id="view-pm"></div>
+      <div class="view" id="view-vendors"></div>
+      <div class="view" id="view-finance"></div>
+      <div class="view" id="view-reports"></div>
+      <div class="view" id="view-performance"></div>
+      <div class="view" id="view-sla"></div>
+      <div class="view" id="view-companies"></div>
+      <div class="view" id="view-inventory"></div>
+      <div class="view" id="view-settings"></div>
+    </div>
+  </main>
+</div>
+
+<div id="ticket-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header"><h3 id="modal-title">New Ticket</h3><button class="close-modal">&times;</button></div>
+    <div class="modal-body">
+      <input type="text" id="ticket-title" placeholder="Title">
+      <textarea id="ticket-desc" placeholder="Description"></textarea>
+      <select id="ticket-priority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select>
+      <select id="ticket-status"><option value="registered">Registered</option><option value="waiting">Waiting Technician</option><option value="inprogress">In Progress</option><option value="resolved">Resolved</option></select>
+    </div>
+    <div class="modal-footer"><button class="btn-secondary cancel-modal">Cancel</button><button id="save-ticket-btn" class="btn-primary">Save</button></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/dashboard.js"></script>
+<script src="/js/tickets.js"></script>
+<script src="/js/users.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>
