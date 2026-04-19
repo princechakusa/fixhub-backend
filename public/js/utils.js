@@ -3,7 +3,7 @@ export function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');
   if (!container) return;
   const toast = document.createElement('div');
-  toast.className = 	oast ;
+  toast.className = `toast ${type}`;
   toast.textContent = message;
   container.appendChild(toast);
   setTimeout(() => toast.remove(), 3000);
@@ -20,7 +20,7 @@ export function closeModal(modalId) {
   if (modal) modal.classList.remove('open');
 }
 
-// Format date helper
+// Format date
 export function formatDate(dateStr) {
   if (!dateStr) return '—';
   try {
@@ -29,17 +29,4 @@ export function formatDate(dateStr) {
   } catch {
     return dateStr;
   }
-}
-
-// Debounce utility
-export function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
 }

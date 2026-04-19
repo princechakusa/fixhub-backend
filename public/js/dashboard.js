@@ -1,12 +1,9 @@
 ﻿import { apiFetch } from './api.js';
 import { showToast } from './utils.js';
 
-let dashboardData = { tickets: [] };
-
 export async function loadDashboard() {
   try {
     const tickets = await apiFetch('/tickets');
-    dashboardData.tickets = tickets;
     renderStats(tickets);
     renderRecentTickets(tickets);
   } catch (err) {
@@ -20,22 +17,10 @@ function renderStats(tickets) {
   const total = tickets.length;
   const statsHtml = `
     <div class="stats-grid">
-      <div class="stat-card">
-        <h3>Active Tickets</h3>
-        <div class="stat-value">${active}</div>
-      </div>
-      <div class="stat-card">
-        <h3>Resolved</h3>
-        <div class="stat-value">${resolved}</div>
-      </div>
-      <div class="stat-card">
-        <h3>Total Tickets</h3>
-        <div class="stat-value">${total}</div>
-      </div>
-      <div class="stat-card">
-        <h3>Resolution Rate</h3>
-        <div class="stat-value">${total ? Math.round((resolved/total)*100) : 0}%</div>
-      </div>
+      <div class="stat-card"><h3>Active Tickets</h3><div class="stat-value">${active}</div></div>
+      <div class="stat-card"><h3>Resolved</h3><div class="stat-value">${resolved}</div></div>
+      <div class="stat-card"><h3>Total Tickets</h3><div class="stat-value">${total}</div></div>
+      <div class="stat-card"><h3>Resolution Rate</h3><div class="stat-value">${total ? Math.round((resolved/total)*100) : 0}%</div></div>
     </div>
   `;
   const dashboardView = document.getElementById('view-dashboard');
@@ -53,19 +38,11 @@ function renderRecentTickets(tickets) {
     container.innerHTML = '<p style="padding:20px; text-align:center; color:var(--text-muted)">No tickets found</p>';
     return;
   }
-  let table = '<table><thead><tr><th>ID</th><th>Title</th><th>Priority</th><th>Status</th><th>Created</th></tr></thead><tbody>';
-  for (let t of recent) {
-    table += `
-      <tr>
-        <td>${t.id}</td>
-        <td>${escapeHtml(t.title)}</td>
-        <td><span class="priority-tag ${t.priority}">${t.priority}</span></td>
-        <td><span class="pill ${t.status}">${t.status}</span></td>
-        <td>${t.date_logged || '—'}</td>
-      </tr>
-    `;
-  }
-  table += '</tbody></table>';
+  const table = `
+    <table><thead><tr><th>ID</th><th>Title</th><th>Priority</th><th>Status</th><th>Created</th></tr></thead>
+    <tbody>${recent.map(t => `<tr><td>${escapeHtml(t.id)}</td><td>${escapeHtml(t.title)}</td><td><span class="priority-tag ${t.priority}">${t.priority}</span></td><td><span class="pill ${t.status}">${t.status}</span></td><td>${t.date_logged || '—'}</td></tr>`).join('')}</tbody>
+    </table>
+  `;
   container.innerHTML = table;
 }
 
