@@ -1,4 +1,8 @@
-﻿const login = async (req, res) => {
+﻿const pool = require('../config/db');
+const { comparePassword } = require('../utils/hashPassword');
+const generateToken = require('../utils/generateToken');
+
+const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'Please provide email and password' });
@@ -25,7 +29,13 @@
       token,
     });
   } catch (error) {
-    console.error('Login error details:', error);
+    console.error('Login error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+const getMe = async (req, res) => {
+  res.json(req.user);
+};
+
+module.exports = { login, getMe };
