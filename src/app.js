@@ -4,11 +4,24 @@ const helmet = require('helmet');
 
 const authRoutes = require('./routes/authRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
-const userRoutes = require('./routes/userRoutes');   // <-- added
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-app.use(helmet());
+// Configure helmet to allow inline scripts and styles
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", "https://fixhub-db.onrender.com"],
+    },
+  },
+}));
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +32,7 @@ app.use(express.static('public'));
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/tickets', ticketRoutes);
-app.use('/api/users', userRoutes);                  // <-- added
+app.use('/api/users', userRoutes);
 
 // Health and test endpoints
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
