@@ -28,13 +28,11 @@ app.get('*', (req, res) => {
 
 const pool = require('./config/db');
 
-app.get('/api/test-db', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT NOW()');
-    res.json({ success: true, time: result.rows[0] });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+app.get('/api/env-test', (req, res) => {
+  res.json({
+    hasDatabaseUrl: !!process.env.DATABASE_URL,
+    urlPrefix: process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 30) + '...' : 'missing'
+  });
 });
 
 module.exports = app;
