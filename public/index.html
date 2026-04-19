@@ -2,108 +2,411 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FixHub – Maintenance Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FixHub | Enterprise Maintenance</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    /* ========== FULL ORIGINAL CSS (condensed but complete) ========== */
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#083332;color:#1a2332;height:100vh;overflow:hidden}
+    :root{--teal-900:#041f1e;--teal-800:#083332;--teal-700:#0A4240;--teal-600:#0c5250;--teal-500:#0f6b66;--teal-400:#14b8a6;--white:#fff;--bg:#f4f6f8;--bg-card:#fff;--border:#e2e6ea;--border-light:#edf0f3;--text-primary:#1a2332;--text-secondary:#4a5568;--text-muted:#8492a6;--sb-w:260px;--sb-col:68px;--topbar:60px;--r:10px;--sh-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);--tr:.2s;--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace}
+    #sb{width:var(--sb-w);min-width:var(--sb-w);height:100vh;background:#f8f9fa;display:flex;flex-direction:column;border-right:1px solid #e9ecef;transition:width var(--tr);overflow:hidden;flex-shrink:0;z-index:200}
+    #sb.col{width:var(--sb-col);min-width:var(--sb-col)}
+    .sb-logo{display:flex;align-items:center;gap:10px;padding:0 18px;height:var(--topbar);border-bottom:1px solid #e9ecef}
+    .logo-mark{width:34px;height:34px;background:var(--teal-400);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:13px;color:#fff}
+    .logo-txt{font-size:16px;font-weight:700;color:#1a2332}
+    .logo-txt em{color:var(--teal-500);font-style:normal}
+    .sb-tog{margin-left:auto;width:26px;height:26px;background:#fff;border:1px solid #e2e8f0;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#94a3b8}
+    .sb-nav{flex:1;padding:8px 10px;overflow-y:auto}
+    .nav-section{font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:#94a3b8;padding:16px 8px 5px}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;color:#64748b;font-size:13.5px;white-space:nowrap}
+    .nav-item:hover{background:#eef2ff;color:#334155}
+    .nav-item.active{background:#e8f5f4;color:var(--teal-600);font-weight:500}
+    .nav-icon{width:18px;height:18px;min-width:18px;display:flex;align-items:center;justify-content:center}
+    .nav-icon svg{width:17px;height:17px}
+    .nav-lbl{flex:1}
+    .nav-badge{min-width:20px;height:18px;background:#f97316;color:#fff;border-radius:9px;font-size:9.5px;font-weight:700;padding:0 5px;display:flex;align-items:center;justify-content:center;font-family:var(--mono)}
+    .sb-foot{padding:12px 10px;border-top:1px solid #e9ecef;display:flex;flex-direction:column;gap:8px}
+    .btn-log-issue{width:100%;padding:10px;background:var(--teal-500);color:#fff;border:none;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px}
+    .user-chip{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer}
+    .user-chip:hover{background:#eef2ff}
+    .uc-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--teal-400),var(--teal-600));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+    .uc-name{font-size:13px;font-weight:500;color:#1e293b}
+    .uc-role{font-size:11px;color:#64748b}
+    #main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;height:100vh}
+    .topbar{height:var(--topbar);background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:12px;box-shadow:var(--sh-sm)}
+    .mob-btn{display:none;width:34px;height:34px;background:var(--bg);border:1px solid var(--border);border-radius:6px;cursor:pointer;align-items:center;justify-content:center}
+    .topbar-title{font-size:16px;font-weight:700}
+    .topbar-r{margin-left:auto;display:flex;align-items:center;gap:8px}
+    .clock-pill{font-family:var(--mono);font-size:11.5px;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);padding:4px 10px;border-radius:20px}
+    .role-badge{font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px}
+    .role-badge.mgr{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+    .t-btn{height:34px;padding:0 14px;border-radius:6px;border:1px solid var(--border);background:var(--white);cursor:pointer;display:flex;align-items:center;gap:6px}
+    .t-btn.prim{background:var(--teal-700);color:#fff;border-color:var(--teal-700)}
+    .t-btn.danger{color:#dc2626;border-color:#fecaca}
+    #content{flex:1;overflow-y:auto;padding:24px}
+    .view{display:none}
+    .view.active{display:block}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh-sm);position:relative;overflow:hidden}
+    .stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--teal-700))}
+    .stat-card.a-teal{--accent:var(--teal-500)}
+    .stat-card.a-blue{--accent:#2563eb}
+    .stat-card.a-orange{--accent:#f97316}
+    .stat-card.a-green{--accent:#16a34a}
+    .stat-val{font-size:28px;font-weight:800;font-family:var(--mono);letter-spacing:-1px}
+    .stat-lbl{font-size:10.5px;color:var(--text-muted);text-transform:uppercase}
+    .tbl-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    table{width:100%;border-collapse:collapse;font-size:12.5px}
+    th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text-muted);background:var(--bg)}
+    td{padding:12px 14px;color:var(--text-secondary);border-bottom:1px solid var(--border-light)}
+    .pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid transparent}
+    .pill.registered{background:var(--bg);color:var(--text-muted);border-color:var(--border)}
+    .pill.waiting{background:#f5f3ff;color:#8b5cf6}
+    .pill.inprogress{background:#eff6ff;color:#2563eb}
+    .pill.inspection{background:#fffbeb;color:#d97706}
+    .pill.resolved{background:#f0fdf4;color:#16a34a}
+    .prio-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
+    .prio-tag.high{background:#fef2f2;color:#dc2626}
+    .prio-tag.medium{background:#fffbeb;color:#d97706}
+    .prio-tag.low{background:#f0fdf4;color:#16a34a}
+    .filter-bar{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .search-wrap{position:relative;flex:1;min-width:180px}
+    .search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--text-muted)}
+    .search-in{width:100%;height:34px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:0 12px 0 30px;font-size:12.5px}
+    .filter-select{height:34px;padding:0 10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:12px}
+    .quick-filters{display:flex;gap:6px}
+    .qf-btn{height:30px;padding:0 12px;border-radius:20px;border:1px solid var(--border);background:var(--white);font-size:11.5px;cursor:pointer}
+    .qf-btn.active{background:var(--teal-700);color:#fff;border-color:var(--teal-700)}
+    .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s}
+    .modal-ov.open{opacity:1;pointer-events:all}
+    .modal-box{background:var(--bg-card);border-radius:14px;width:520px;max-width:90vw;box-shadow:0 20px 48px rgba(0,0,0,.14);transform:translateY(16px) scale(.97);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+    .modal-ov.open .modal-box{transform:translateY(0) scale(1)}
+    .modal-hd{padding:20px 24px 16px;border-bottom:1px solid var(--border-light);display:flex;justify-content:space-between}
+    .modal-body{padding:20px 24px}
+    .modal-foot{padding:14px 24px;border-top:1px solid var(--border-light);display:flex;justify-content:flex-end;gap:10px}
+    .fg{margin-bottom:14px}
+    .fl{display:block;font-size:10.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:5px}
+    .fi,.fs,.fta{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:6px;padding:9px 12px;font-size:13px}
+    .btn{height:36px;padding:0 16px;border-radius:6px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;border:1px solid transparent}
+    .btn-prim{background:var(--teal-700);color:#fff}
+    .btn-ghost{background:transparent;border-color:var(--border);color:var(--text-muted)}
+    .btn-danger{background:#dc2626;color:#fff}
+    .users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+    .user-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:20px;text-align:center}
+    .uc-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin:0 auto 10px}
+    .inv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+    .inv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+    .set-block{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:20px}
+    .set-row{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border-light)}
+    .tog{width:50px;height:28px;background:#d1d5db;border-radius:28px;cursor:pointer;position:relative;transition:background .3s}
+    .tog.on{background:#22c55e}
+    .tog-k{position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .3s}
+    .tog.on .tog-k{transform:translateX(22px)}
+    .lock-screen{max-width:420px;margin:50px auto;text-align:center}
+    #toast-area{position:fixed;bottom:20px;right:20px;z-index:9001;display:flex;flex-direction:column;gap:8px}
+    .toast{background:var(--text-primary);color:#fff;border-left:3px solid var(--teal-400);border-radius:6px;padding:12px 16px;font-size:12.5px;box-shadow:0 4px 12px rgba(0,0,0,.09);max-width:280px}
+    .toast.success{border-left-color:#16a34a}
+    .toast.error{border-left-color:#dc2626}
+    .lb-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .lb-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    .lb-row{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border-light)}
+    .lb-rank{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+    .lb-rank.r1{background:#ffd700;color:#7a5800}
+    .lb-rank.r2{background:#c0c0c0;color:#4a4a4a}
+    .lb-rank.r3{background:#cd7f32;color:#5a3000}
+    .lb-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+    .lb-bar-wrap{width:100px;flex-shrink:0}
+    .lb-bar-bg{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+    .lb-bar-fill{height:100%;border-radius:3px;transition:width .8s ease}
+    .companies-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+    .vault-users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+    @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}.lb-grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
 
 <div id="login-screen">
-  <div class="login-card">
-    <div class="login-header">
-      <div class="logo">FixHub</div>
-      <h2>Welcome back</h2>
-      <p>Sign in to your account</p>
-    </div>
-    <div id="login-error" class="error-message"></div>
-    <input type="email" id="login-email" placeholder="Email address" autocomplete="email">
-    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
-    <button id="login-btn" class="btn-primary">Sign In</button>
-    <div class="login-footer">Need help? Contact <strong>Prince Chakusa</strong></div>
+  <div class="login-card" style="background:#fff;border-radius:18px;width:400px;padding:32px;margin:auto;text-align:center">
+    <div class="login-header"><div class="logo" style="font-size:24px;font-weight:700;color:var(--teal-500)">FixHub</div><h2>Welcome back</h2><p>Sign in to your account</p></div>
+    <div id="login-err" class="error-message" style="display:none;color:#dc2626;margin-bottom:16px"></div>
+    <input type="email" id="login-email" placeholder="Email address" style="width:100%;padding:12px;margin-bottom:16px;border:1px solid #e2e8f0;border-radius:12px">
+    <input type="password" id="login-password" placeholder="Password" style="width:100%;padding:12px;margin-bottom:16px;border:1px solid #e2e8f0;border-radius:12px">
+    <button id="login-btn" class="btn-primary" style="background:var(--teal-700);color:#fff;width:100%;padding:12px;border-radius:12px">Sign In</button>
+    <div class="login-footer" style="margin-top:20px;font-size:12px;color:var(--text-muted)">Contact <strong>Prince Chakusa</strong> for access</div>
   </div>
 </div>
 
-<div id="app" style="display: none;">
-  <aside id="sidebar">
-    <div class="sidebar-header">
-      <div class="logo">FixHub</div>
-      <button id="collapse-btn" class="icon-btn">‹</button>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section">Main</div>
-      <div class="nav-item active" data-view="dashboard"><span class="nav-icon"></span><span class="nav-label">Dashboard</span></div>
-      <div class="nav-item" data-view="tickets"><span class="nav-icon"></span><span class="nav-label">Tickets</span><span class="nav-badge" id="ticket-badge">0</span></div>
-      <div class="nav-item" data-view="users"><span class="nav-icon"></span><span class="nav-label">Users</span></div>
-      <div class="nav-section">Operations</div>
-      <div class="nav-item" data-view="properties"><span class="nav-icon"></span><span class="nav-label">Properties</span></div>
-      <div class="nav-item" data-view="pm"><span class="nav-icon"></span><span class="nav-label">Preventive Maint.</span></div>
-      <div class="nav-item" data-view="vendors"><span class="nav-icon"></span><span class="nav-label">Vendors</span></div>
-      <div class="nav-section">Analytics</div>
-      <div class="nav-item" data-view="finance"><span class="nav-icon"></span><span class="nav-label">Finance</span></div>
-      <div class="nav-item" data-view="reports"><span class="nav-icon"></span><span class="nav-label">Reports</span></div>
-      <div class="nav-item" data-view="performance"><span class="nav-icon"></span><span class="nav-label">Performance</span></div>
-      <div class="nav-item" data-view="sla"><span class="nav-icon"></span><span class="nav-label">SLA Tracker</span></div>
-      <div class="nav-section">System</div>
-      <div class="nav-item" data-view="companies"><span class="nav-icon"></span><span class="nav-label">Companies</span></div>
-      <div class="nav-item" data-view="inventory"><span class="nav-icon"></span><span class="nav-label">Inventory</span></div>
-      <div class="nav-item" data-view="settings"><span class="nav-icon"></span><span class="nav-label">Settings</span></div>
-    </nav>
-    <div class="sidebar-footer">
-      <button id="new-ticket-fab" class="btn-primary">+ New Ticket</button>
-      <div class="user-info">
-        <div class="avatar" id="user-avatar">?</div>
-        <div><div class="user-name" id="user-name">Not signed in</div><div class="user-role" id="user-role">—</div></div>
-      </div>
-      <button id="logout-btn" class="btn-outline">Sign Out</button>
-    </div>
-  </aside>
-
-  <main id="main-content">
-    <div class="topbar">
-      <button id="mobile-menu-btn" class="icon-btn">☰</button>
-      <h1 id="page-title">Dashboard</h1>
-      <div class="topbar-right"><span id="live-clock"></span><button id="refresh-btn" class="icon-btn">⟳</button></div>
-    </div>
-    <div id="content-area">
-      <div class="view active" id="view-dashboard">Loading dashboard...</div>
-      <div class="view" id="view-tickets"></div>
-      <div class="view" id="view-users"></div>
-      <div class="view" id="view-properties"></div>
-      <div class="view" id="view-pm"></div>
-      <div class="view" id="view-vendors"></div>
-      <div class="view" id="view-finance"></div>
-      <div class="view" id="view-reports"></div>
-      <div class="view" id="view-performance"></div>
-      <div class="view" id="view-sla"></div>
-      <div class="view" id="view-companies"></div>
-      <div class="view" id="view-inventory"></div>
-      <div class="view" id="view-settings"></div>
-    </div>
-  </main>
-</div>
-
-<div id="ticket-modal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header"><h3 id="modal-title">New Ticket</h3><button class="close-modal">&times;</button></div>
-    <div class="modal-body">
-      <input type="text" id="ticket-title" placeholder="Title">
-      <textarea id="ticket-desc" placeholder="Description"></textarea>
-      <select id="ticket-priority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select>
-      <select id="ticket-status"><option value="registered">Registered</option><option value="waiting">Waiting Technician</option><option value="inprogress">In Progress</option><option value="resolved">Resolved</option></select>
-    </div>
-    <div class="modal-footer"><button class="btn-secondary cancel-modal">Cancel</button><button id="save-ticket-btn" class="btn-primary">Save</button></div>
+<div id="sb" style="visibility:hidden; display:flex;">
+  <div class="sb-logo"><div class="logo-mark">FX</div><div class="logo-txt">Fix<em>Hub</em></div><button class="sb-tog" onclick="toggleSB()">‹</button></div>
+  <nav class="sb-nav">
+    <div class="nav-section">Main</div>
+    <div class="nav-item active" data-view="dashboard"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><span class="nav-lbl">Dashboard</span></div>
+    <div class="nav-item" data-view="tickets"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></div><span class="nav-lbl">Tickets</span><span class="nav-badge" id="badge">0</span></div>
+    <div class="nav-item" data-view="users"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><span class="nav-lbl">Users</span></div>
+    <div class="nav-section">Operations</div>
+    <div class="nav-item" data-view="properties"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="nav-lbl">Properties</span></div>
+    <div class="nav-item" data-view="pm"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zm0 6v4l3 3"/></svg></div><span class="nav-lbl">Preventive Maint.</span></div>
+    <div class="nav-item" data-view="vendors"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><span class="nav-lbl">Vendors</span></div>
+    <div class="nav-section">Analytics</div>
+    <div class="nav-item" data-view="finance"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><span class="nav-lbl">Finance</span></div>
+    <div class="nav-item" data-view="reports"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div><span class="nav-lbl">Reports</span></div>
+    <div class="nav-item" data-view="performance"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div><span class="nav-lbl">Performance</span></div>
+    <div class="nav-item" data-view="sla"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><span class="nav-lbl">SLA Tracker</span></div>
+    <div class="nav-section">System</div>
+    <div class="nav-item" data-view="companies"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="nav-lbl">Companies</span></div>
+    <div class="nav-item" data-view="vault"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg></div><span class="nav-lbl">Credentials</span></div>
+    <div class="nav-item" data-view="inventory"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><span class="nav-lbl">Inventory</span></div>
+    <div class="nav-item" data-view="settings"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><span class="nav-lbl">Settings</span></div>
+    <div class="nav-item" onclick="doLogout()" style="color:#ef4444;"><div class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div><span class="nav-lbl">Sign Out</span></div>
+  </nav>
+  <div class="sb-foot">
+    <button class="btn-log-issue" onclick="openTicketModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg><span class="bli-lbl">Log Issue</span></button>
+    <div class="user-chip"><div class="uc-av" id="sb-av">?</div><div class="uc-info"><div class="uc-name" id="sb-name">Not signed in</div><div class="uc-role" id="sb-role">—</div></div></div>
   </div>
 </div>
 
-<div id="toast-container"></div>
+<div id="main" style="visibility:hidden; display:flex;">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px;"><button class="mob-btn" onclick="openMob()">☰</button><div class="topbar-title" id="tt">Dashboard</div><span id="company-badge" style="display:none"></span></div>
+    <div class="topbar-r"><span class="clock-pill" id="live-clock"></span><span class="role-badge" id="role-badge"></span><button class="t-btn" id="refresh-btn" onclick="doRefresh()">⟳</button><button class="t-btn prim" onclick="openTicketModal()">+ New Ticket</button><button class="t-btn danger" onclick="doLogout()">Sign Out</button></div>
+  </div>
+  <div id="content">
+    <div class="view active" id="view-dashboard"><div class="stats-grid"><div class="stat-card a-teal"><div class="stat-val" id="sv-active">—</div><div class="stat-lbl">Active Tickets</div></div><div class="stat-card a-blue"><div class="stat-val" id="sv-resolved">—</div><div class="stat-lbl">Resolved Today</div></div><div class="stat-card a-orange"><div class="stat-val" id="sv-total">—</div><div class="stat-lbl">Total Tickets</div></div><div class="stat-card a-green"><div class="stat-val" id="sv-sla">—</div><div class="stat-lbl">SLA Rate</div></div></div><div class="dash-grid" style="display:grid;grid-template-columns:1fr 300px;gap:16px"><div><div class="sec-hd"><div class="sec-title">Recent Tickets</div><button class="t-btn" onclick="gotoView('tickets')">View All</button></div><div class="tbl-card"><div class="tbl-wrap"><table><thead><tr><th>ID</th><th>Title</th><th>Technician</th><th>Status</th></tr></thead><tbody id="recent-tbody"></tbody></table></div></div></div><div><div class="panel"><div class="panel-hd">Live Activity</div><div class="panel-body"><div class="act-list" id="act-feed"></div></div></div><div class="panel"><div class="panel-hd">SLA Compliance</div><div class="sla-ring-wrap" style="text-align:center;padding:20px"><canvas id="sla-ring" width="100" height="100"></canvas><div id="sla-pct" style="margin-top:10px">—</div></div><div class="sla-stats" style="display:flex"><div class="sla-stat">Met: <span id="sla-met">—</span></div><div class="sla-stat">Breached: <span id="sla-breach">—</span></div></div></div></div></div></div>
+    <div class="view" id="view-tickets"><div class="sec-hd"><div class="sec-title">Tickets</div><button class="t-btn prim" onclick="openTicketModal()">New Ticket</button></div><div class="filter-bar"><div class="search-wrap"><input class="search-in" id="tsearch" placeholder="Search tickets..." oninput="filterTix()"></div><select class="filter-select" id="f-status-filter" onchange="filterTix()"><option value="">All Statuses</option><option value="registered">Registered</option><option value="waiting">Waiting</option><option value="inprogress">In Progress</option><option value="inspection">Inspection</option><option value="resolved">Resolved</option></select><select class="filter-select" id="f-prio-filter" onchange="filterTix()"><option value="">All Priorities</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select><select class="filter-select" id="f-tech-filter" onchange="filterTix()"><option value="">All Assignees</option></select><div class="quick-filters"><button class="qf-btn active" onclick="setQuick('all',this)">All</button><button class="qf-btn" onclick="setQuick('open',this)">Open</button><button class="qf-btn" onclick="setQuick('resolved',this)">Resolved</button></div></div><div class="tbl-card"><div class="tbl-wrap"><table><thead><tr><th>ID</th><th>Title</th><th>Assignee</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead><tbody id="tix-tbody"></tbody></table><div id="tix-empty" class="empty-state" style="display:none;text-align:center;padding:40px">No tickets found</div></div></div></div>
+    <div class="view" id="view-users"><div id="users-lock"><div class="lock-screen"><div class="lock-icon">🔒</div><div>Manager Access Required</div><div>Only Prince Chakusa can manage team members.<br>Enter your manager PIN.</div><div class="lock-card"><input type="password" id="mgr-pin" placeholder="PIN" class="fi"><div id="pin-error" style="color:#dc2626;display:none">Incorrect PIN</div><button class="btn btn-prim" onclick="verifyPin()">Unlock</button></div></div></div><div id="users-panel" style="display:none"><div class="sec-hd"><div class="sec-title">Team Members</div><div><button class="t-btn prim" onclick="openAddUser()">Add Member</button><button class="t-btn" onclick="lockUsers()">Lock</button></div></div><div class="users-grid" id="users-grid"></div></div></div>
+    <div class="view" id="view-properties"><div class="sec-hd"><div class="sec-title">Properties</div><button class="t-btn prim" onclick="openAddProperty()">Add Property</button></div><div id="properties-grid" class="properties-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px"></div></div>
+    <div class="view" id="view-pm"><div class="sec-hd"><div class="sec-title">Preventive Maintenance</div><button class="t-btn prim" onclick="openAddPM()">Add Schedule</button></div><div id="pm-grid" class="pm-grid"></div></div>
+    <div class="view" id="view-vendors"><div class="sec-hd"><div class="sec-title">Vendors</div><button class="t-btn prim" onclick="openAddVendor()">Add Vendor</button></div><div id="vendors-grid" class="vendors-grid"></div></div>
+    <div class="view" id="view-finance"><div class="sec-hd"><div class="sec-title">Financial Tracking</div><select id="finance-year" class="filter-select"></select><select id="finance-month" class="filter-select"></select><button class="t-btn prim" onclick="openAddBudget()">Add Budget</button></div><div class="stats-grid" id="finance-stats"></div><div id="budget-list"></div><div id="cost-by-category"></div><div id="cost-by-property"></div><div class="tbl-card"><table><thead><tr><th>Ticket</th><th>Title</th><th>Cost (AED)</th><th>Action</th></tr></thead><tbody id="ticket-cost-tbody"></tbody></table></div></div>
+    <div class="view" id="view-reports"><div class="sec-hd"><div class="sec-title">Reports & Export</div><select id="report-year" class="filter-select"></select><button class="t-btn" onclick="exportExcel()">Export Excel</button><button class="t-btn" onclick="exportPDF()">Export PDF</button></div><div class="chart-card"><canvas id="monthly-chart" width="400" height="200" style="max-width:100%"></canvas></div><div class="kpi-grid" id="report-kpis"></div><div id="status-breakdown"></div><div id="tech-breakdown"></div><div class="tbl-card"><table><thead><tr><th>Month</th><th>Total</th><th>Resolved</th><th>Rate</th></tr></thead><tbody id="monthly-summary-tbody"></tbody></table></div></div>
+    <div class="view" id="view-performance"><div class="lb-grid"><div class="lb-card"><div class="lb-hd">Top Performers</div><div id="lb-resolved"></div></div><div class="lb-card"><div class="lb-hd">SLA Compliance</div><div id="lb-sla"></div></div><div class="lb-card"><div class="lb-hd">Current Workload</div><div id="lb-workload"></div></div><div class="lb-card"><div class="lb-hd">Overdue Tickets</div><div id="lb-overdue"></div></div></div></div>
+    <div class="view" id="view-sla"><div class="sec-hd"><div class="sec-title">SLA Tracker</div></div><div class="tbl-card"><table><thead><tr><th>ID</th><th>Title</th><th>Priority</th><th>Target (h)</th><th>Elapsed (h)</th><th>Status</th></tr></thead><tbody id="sla-tbody"></tbody></table></div></div>
+    <div class="view" id="view-companies"><div class="sec-hd"><div class="sec-title">Companies</div><button class="t-btn prim" onclick="openAddCompany()">Add Company</button></div><div id="companies-grid" class="companies-grid"></div><div class="sec-hd" style="margin-top:24px"><div class="sec-title">All Users Across Companies</div><select id="co-user-filter" class="filter-select" onchange="renderAllUsers()"><option value="">All Companies</option></select></div><div class="tbl-card"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Company</th><th>Access</th><th>Password</th><th>Actions</th></tr></thead><tbody id="all-users-tbody"></tbody></table></div></div>
+    <div class="view" id="view-vault"><div class="sec-hd"><div class="sec-title">Credentials Vault</div><button class="t-btn" onclick="copyAllCredentials()">Copy All</button></div><div id="vault-content"></div></div>
+    <div class="view" id="view-inventory"><div class="sec-hd"><div class="sec-title">Inventory</div><button class="t-btn prim" onclick="openAddInvItem()">Add Item</button></div><div class="inv-grid" id="inv-grid"></div></div>
+    <div class="view" id="view-settings"><div class="set-block"><div class="set-hd">Notifications</div><div class="set-row"><div>SLA Breach Alerts</div><div class="tog on" id="tog-sla-alerts" onclick="togSwitch(this,'sla-alerts')"><span class="tog-k"></span></div></div><div class="set-row"><div>Stock Level Alerts</div><div class="tog on" id="tog-stock-alerts" onclick="togSwitch(this,'stock-alerts')"><span class="tog-k"></span></div></div><div class="set-row"><div>New Ticket Alerts</div><div class="tog on" id="tog-new-ticket" onclick="togSwitch(this,'new-ticket')"><span class="tog-k"></span></div></div></div><div class="set-block"><div class="set-hd">Dashboard</div><div class="set-row"><div>Auto-Refresh</div><div class="tog on" id="tog-auto-refresh" onclick="togSwitch(this,'auto-refresh')"><span class="tog-k"></span></div></div><div class="set-row"><div>Compact Table View</div><div class="tog" id="tog-compact" onclick="togSwitch(this,'compact')"><span class="tog-k"></span></div></div></div><div class="set-block"><div class="set-hd">SLA Targets</div><div class="sla-input-row"><div>High Priority</div><input type="number" id="sla-high" value="4" min="1" class="sla-hrs"> hours</div><div class="sla-input-row"><div>Medium Priority</div><input type="number" id="sla-med" value="12" min="1" class="sla-hrs"> hours</div><div class="sla-input-row"><div>Low Priority</div><input type="number" id="sla-low" value="48" min="1" class="sla-hrs"> hours</div></div><div class="set-block"><div class="set-hd">Manager PIN</div><div class="set-row"><div>Current PIN</div><input type="password" id="cp-cur" class="fi" style="width:120px"></div><div class="set-row"><div>New PIN</div><input type="password" id="cp-new" class="fi" style="width:120px"></div><div class="set-row"><div>Confirm</div><input type="password" id="cp-cfm" class="fi" style="width:120px"><button class="btn btn-prim" onclick="changePin()">Update PIN</button></div><div id="cp-msg"></div></div></div>
+  </div>
+</div>
 
-<script type="module" src="/js/api.js"></script>
-<script type="module" src="/js/utils.js"></script>
-<script type="module" src="/js/auth.js"></script>
-<script type="module" src="/js/dashboard.js"></script>
-<script type="module" src="/js/tickets.js"></script>
-<script type="module" src="/js/users.js"></script>
-<script type="module" src="/js/app.js"></script>
+<div id="ticket-modal" class="modal-ov" onclick="if(event.target===this)closeTicketModal()"><div class="modal-box"><div class="modal-hd"><div class="modal-title">New Ticket</div><button class="modal-close" onclick="closeTicketModal()">✕</button></div><div class="modal-body"><input id="f-title" placeholder="Title" class="fi"><textarea id="f-desc" placeholder="Description" class="fta"></textarea><select id="f-prio" class="fs"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select><select id="f-status" class="fs"><option value="registered">Registered</option><option value="waiting">Waiting</option><option value="inprogress">In Progress</option><option value="resolved">Resolved</option></select><input id="f-target" type="date" class="fi"></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeTicketModal()">Cancel</button><button class="btn btn-prim" id="save-ticket-btn">Save</button></div></div></div>
+<div id="edit-ticket-modal" class="modal-ov" onclick="if(event.target===this)closeEditTicket()"><div class="modal-box"><div class="modal-hd"><div class="modal-title">Edit Ticket <span id="edit-ticket-id"></span></div><button class="modal-close" onclick="closeEditTicket()">✕</button></div><div class="modal-body"><input id="et-title" class="fi"><textarea id="et-desc" class="fta"></textarea><select id="et-prio" class="fs"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select><select id="et-status" class="fs"><option value="registered">Registered</option><option value="waiting">Waiting</option><option value="inprogress">In Progress</option><option value="resolved">Resolved</option></select><input id="et-target" type="date" class="fi"></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeEditTicket()">Cancel</button><button class="btn btn-prim" onclick="saveEditTicket()">Save</button></div></div></div>
+<div id="del-ticket-modal" class="modal-ov" onclick="if(event.target===this)closeDelTicket()"><div class="modal-box"><div class="modal-hd">Delete Ticket</div><div class="modal-body">Are you sure you want to delete this ticket?</div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeDelTicket()">Cancel</button><button class="btn btn-danger" onclick="confirmDelTicket()">Delete</button></div></div></div>
+<div id="user-modal" class="modal-ov" onclick="if(event.target===this)closeUserModal()"><div class="modal-box"><div class="modal-hd"><div class="modal-title">Add User</div><button class="modal-close" onclick="closeUserModal()">✕</button></div><div class="modal-body"><input id="u-name" placeholder="Full Name" class="fi"><input id="u-email" type="email" placeholder="Email" class="fi"><input id="u-role" placeholder="Role" class="fi"><select id="u-access" class="fs"><option value="technician">Technician</option><option value="supervisor">Supervisor</option><option value="manager">Manager</option></select><div id="colour-picker" style="display:flex;gap:8px;margin-top:10px"><div class="col-sw" data-c="#0891b2" style="background:#0891b2"></div><div class="col-sw" data-c="#7c3aed" style="background:#7c3aed"></div><div class="col-sw" data-c="#ea580c" style="background:#ea580c"></div><div class="col-sw" data-c="#0d9488" style="background:#0d9488"></div></div></div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeUserModal()">Cancel</button><button class="btn btn-prim" id="user-save-btn">Save</button></div></div></div>
+<div id="remove-modal" class="modal-ov" onclick="if(event.target===this)closeRemoveModal()"><div class="modal-box"><div class="modal-hd">Remove Member</div><div class="modal-body">Remove <span id="remove-name"></span>?</div><div class="modal-foot"><button class="btn btn-ghost" onclick="closeRemoveModal()">Cancel</button><button class="btn btn-danger" onclick="confirmRemove()">Remove</button></div></div></div>
+<div id="toast-area"></div>
+
+<script>
+  // ====================== API CONFIG ======================
+  const API_BASE = 'https://fixhub-db.onrender.com/api';
+  let authToken = localStorage.getItem('token');
+  let currentUser = null;
+  let managerUnlocked = false;
+  let allTickets = [];
+  let allUsers = [];
+  let allInventory = [];
+  let allCompanies = [];
+  let editingTicketId = null;
+  let editingUserId = null;
+  let removeTargetIdx = null;
+  let delTicketId = null;
+  let selectedColor = '#0891b2';
+  let appSettings = { 'sla-alerts':true, 'stock-alerts':true, 'new-ticket':true, 'auto-refresh':true, 'compact':false };
+
+  // Helper fetch
+  async function apiFetch(endpoint, options = {}) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (authToken) headers['Authorization'] = `Bearer ${authToken}`;
+    const res = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: 'Request failed' }));
+      throw new Error(err.message);
+    }
+    return res.json();
+  }
+
+  function toast(msg, type='') { const t = document.createElement('div'); t.className = `toast ${type}`; t.innerText = msg; document.getElementById('toast-area').appendChild(t); setTimeout(() => t.remove(), 3000); }
+
+  // Login
+  async function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pwd = document.getElementById('login-password').value;
+    const errDiv = document.getElementById('login-err');
+    try {
+      const data = await apiFetch('/auth/login', { method: 'POST', body: JSON.stringify({ email, password:pwd }) });
+      authToken = data.token;
+      currentUser = data;
+      localStorage.setItem('token', authToken);
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('sb').style.visibility = 'visible';
+      document.getElementById('main').style.visibility = 'visible';
+      document.getElementById('sb-name').innerText = data.name;
+      document.getElementById('sb-role').innerText = data.role || 'Technician';
+      document.getElementById('sb-av').innerText = data.name.charAt(0);
+      document.getElementById('role-badge').innerText = data.accessLevel === 'manager' ? 'Manager' : 'Technician';
+      gotoView('dashboard');
+      refreshAll();
+    } catch(err) { errDiv.innerText = err.message; errDiv.style.display = 'block'; }
+  }
+  function doLogout() { localStorage.removeItem('token'); location.reload(); }
+
+  // Navigation
+  function gotoView(view) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById(`view-${view}`).classList.add('active');
+    document.getElementById('tt').innerText = view.charAt(0).toUpperCase() + view.slice(1);
+    if (view === 'dashboard') loadDashboard();
+    else if (view === 'tickets') loadTickets();
+    else if (view === 'users') loadUsers();
+    else if (view === 'properties') loadProperties();
+    else if (view === 'pm') loadPM();
+    else if (view === 'vendors') loadVendors();
+    else if (view === 'finance') loadFinance();
+    else if (view === 'reports') loadReports();
+    else if (view === 'performance') loadPerformance();
+    else if (view === 'sla') loadSLA();
+    else if (view === 'companies') loadCompanies();
+    else if (view === 'vault') loadVault();
+    else if (view === 'inventory') loadInventory();
+    else if (view === 'settings') loadSettings();
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelector(`.nav-item[data-view="${view}"]`).classList.add('active');
+  }
+  function refreshAll() { const active = document.querySelector('.view.active')?.id; if (active === 'view-dashboard') loadDashboard(); else if (active === 'view-tickets') loadTickets(); else if (active === 'view-users') loadUsers(); else if (active === 'view-inventory') loadInventory(); else if (active === 'view-companies') loadCompanies(); else if (active === 'view-vault') loadVault(); }
+
+  // Dashboard
+  async function loadDashboard() {
+    try {
+      const tickets = await apiFetch('/tickets');
+      allTickets = tickets;
+      const active = tickets.filter(t => t.status !== 'resolved').length;
+      const resolved = tickets.filter(t => t.status === 'resolved').length;
+      const total = tickets.length;
+      const slaRate = total ? Math.round((resolved/total)*100) : 0;
+      document.getElementById('sv-active').innerText = active;
+      document.getElementById('sv-resolved').innerText = resolved;
+      document.getElementById('sv-total').innerText = total;
+      document.getElementById('sv-sla').innerText = slaRate + '%';
+      document.getElementById('badge').innerText = active;
+      const recentHtml = tickets.slice(0,5).map(t => `<tr><td>${t.id}</td><td>${t.title}</td><td>${t.tech || 'Unassigned'}</td><td><span class="pill ${t.status}">${t.status}</span></td></tr>`).join('');
+      document.getElementById('recent-tbody').innerHTML = recentHtml || '<tr><td colspan="4">No tickets</td></tr>';
+      document.getElementById('act-feed').innerHTML = tickets.slice(0,5).map(t => `<div class="act-item"><div class="act-dot teal"></div><div><strong>${t.id}</strong> ${t.title}</div></div>`).join('') || '<div>No activity</div>';
+      const ctx = document.getElementById('sla-ring')?.getContext('2d');
+      if(ctx) { ctx.clearRect(0,0,100,100); ctx.beginPath(); ctx.arc(50,50,40,0,2*Math.PI); ctx.strokeStyle = '#e2e6ea'; ctx.lineWidth=8; ctx.stroke(); ctx.beginPath(); ctx.arc(50,50,40,0,2*Math.PI*(slaRate/100)); ctx.strokeStyle = '#16a34a'; ctx.stroke(); document.getElementById('sla-pct').innerText = slaRate+'%'; }
+      document.getElementById('sla-met').innerText = resolved;
+      document.getElementById('sla-breach').innerText = active;
+    } catch(e) { toast('Dashboard error: '+e.message, 'error'); }
+  }
+
+  // Tickets
+  async function loadTickets() {
+    try {
+      const tickets = await apiFetch('/tickets');
+      allTickets = tickets;
+      filterTix();
+      const techs = [...new Set(tickets.map(t=>t.tech).filter(t=>t))];
+      const techSel = document.getElementById('f-tech-filter');
+      techSel.innerHTML = '<option value="">All Assignees</option>' + techs.map(t=>`<option value="${t}">${t}</option>`).join('');
+    } catch(e) { toast('Failed to load tickets', 'error'); }
+  }
+  let quickMode = 'all';
+  function setQuick(mode, btn) { quickMode = mode; document.querySelectorAll('.qf-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); filterTix(); }
+  function filterTix() {
+    const search = document.getElementById('tsearch').value.toLowerCase();
+    const statusFilter = document.getElementById('f-status-filter').value;
+    const prioFilter = document.getElementById('f-prio-filter').value;
+    const techFilter = document.getElementById('f-tech-filter').value;
+    let filtered = allTickets.filter(t => (!statusFilter || t.status === statusFilter) && (!prioFilter || t.prio === prioFilter) && (!techFilter || t.tech === techFilter) && (search === '' || t.title.toLowerCase().includes(search) || t.id.toLowerCase().includes(search)));
+    if (quickMode === 'open') filtered = filtered.filter(t => t.status !== 'resolved');
+    if (quickMode === 'resolved') filtered = filtered.filter(t => t.status === 'resolved');
+    const tbody = filtered.map(t => `<tr><td>${t.id}</td><td>${t.title}</td><td>${t.tech || 'Unassigned'}</td><td><span class="prio-tag ${t.prio}">${t.prio}</span></td><td><span class="pill ${t.status}">${t.status}</span></td><td><button class="action-btn" onclick="openEditTicket('${t.id}')">✏️</button> <button class="action-btn" onclick="openDelTicket('${t.id}')">🗑️</button></td></tr>`).join('');
+    document.getElementById('tix-tbody').innerHTML = tbody || '<tr><td colspan="6">No tickets</td></tr>';
+  }
+  function openTicketModal() { editingTicketId = null; document.getElementById('f-title').value = ''; document.getElementById('f-desc').value = ''; document.getElementById('f-prio').value = 'medium'; document.getElementById('f-status').value = 'registered'; document.getElementById('f-target').value = new Date(Date.now()+3*864e5).toISOString().slice(0,10); document.getElementById('ticket-modal').classList.add('open'); }
+  function closeTicketModal() { document.getElementById('ticket-modal').classList.remove('open'); }
+  async function saveTicket() {
+    const title = document.getElementById('f-title').value.trim();
+    if (!title) { toast('Title required', 'error'); return; }
+    const payload = { title, description: document.getElementById('f-desc').value, priority: document.getElementById('f-prio').value, status: document.getElementById('f-status').value, target_date: document.getElementById('f-target').value };
+    try {
+      if (editingTicketId) await apiFetch(`/tickets/${editingTicketId}`, { method: 'PUT', body: JSON.stringify(payload) });
+      else await apiFetch('/tickets', { method: 'POST', body: JSON.stringify(payload) });
+      toast('Ticket saved', 'success');
+      closeTicketModal();
+      loadTickets();
+      if (document.getElementById('view-dashboard').classList.contains('active')) loadDashboard();
+    } catch(e) { toast('Save failed: '+e.message, 'error'); }
+  }
+  async function openEditTicket(id) { const t = allTickets.find(t=>t.id===id); if(t){ editingTicketId=id; document.getElementById('et-title').value=t.title; document.getElementById('et-desc').value=t.desc||''; document.getElementById('et-prio').value=t.prio; document.getElementById('et-status').value=t.status; document.getElementById('et-target').value=t.target? new Date(t.target).toISOString().slice(0,10):''; document.getElementById('edit-ticket-id').innerText=id; document.getElementById('edit-ticket-modal').classList.add('open'); } }
+  function closeEditTicket() { document.getElementById('edit-ticket-modal').classList.remove('open'); }
+  async function saveEditTicket() { const payload = { title:document.getElementById('et-title').value, description:document.getElementById('et-desc').value, priority:document.getElementById('et-prio').value, status:document.getElementById('et-status').value, target_date:document.getElementById('et-target').value }; try { await apiFetch(`/tickets/${editingTicketId}`, { method:'PUT', body:JSON.stringify(payload) }); toast('Updated', 'success'); closeEditTicket(); loadTickets(); if (document.getElementById('view-dashboard').classList.contains('active')) loadDashboard(); } catch(e){ toast('Error', 'error'); } }
+  function openDelTicket(id) { delTicketId = id; document.getElementById('del-ticket-modal').classList.add('open'); }
+  function closeDelTicket() { document.getElementById('del-ticket-modal').classList.remove('open'); delTicketId = null; }
+  async function confirmDelTicket() { if(!delTicketId) return; try { await apiFetch(`/tickets/${delTicketId}`, { method:'DELETE' }); toast('Deleted', 'success'); closeDelTicket(); loadTickets(); if (document.getElementById('view-dashboard').classList.contains('active')) loadDashboard(); } catch(e){ toast('Delete failed', 'error'); } }
+
+  // Users (PIN protected, full CRUD)
+  let managerPin = '1234'; // default, will be loaded from backend
+  async function loadPin() { try { const settings = await apiFetch('/settings'); if(settings && settings.manager_pin) managerPin = settings.manager_pin; } catch(e){} }
+  async function verifyPin() { const pin = document.getElementById('mgr-pin').value; if(pin === managerPin) { managerUnlocked = true; document.getElementById('users-lock').style.display = 'none'; document.getElementById('users-panel').style.display = 'block'; loadUsersGrid(); } else { document.getElementById('pin-error').style.display = 'block'; } }
+  function lockUsers() { managerUnlocked = false; document.getElementById('users-lock').style.display = 'block'; document.getElementById('users-panel').style.display = 'none'; }
+  async function loadUsers() { if(!managerUnlocked) return; loadUsersGrid(); }
+  async function loadUsersGrid() { try { const users = await apiFetch('/users'); allUsers = users; document.getElementById('users-grid').innerHTML = users.map(u => `<div class="user-card"><div class="uc-avatar" style="background:${u.color}22;color:${u.color}">${u.name.charAt(0)}</div><div class="uc-name">${u.name}</div><div class="uc-role">${u.role}</div><div class="uc-stats"><div class="uc-stat">Tickets: ${u.tickets||0}</div></div><div class="uc-actions"><button onclick="openEditUser('${u.id}')">Edit</button><button onclick="openRemoveUser('${u.id}')">Remove</button></div></div>`).join(''); } catch(e){ toast('Failed to load users', 'error'); } }
+  function openAddUser() { editingUserId = null; document.getElementById('u-name').value=''; document.getElementById('u-email').value=''; document.getElementById('u-role').value=''; document.getElementById('u-access').value='technician'; selectedColor='#0891b2'; document.querySelectorAll('.col-sw').forEach(s=>s.classList.toggle('active',s.dataset.c===selectedColor)); document.getElementById('user-modal').classList.add('open'); }
+  function openEditUser(id) { const u = allUsers.find(u=>u.id===id); if(u){ editingUserId=id; document.getElementById('u-name').value=u.name; document.getElementById('u-email').value=u.email; document.getElementById('u-role').value=u.role; document.getElementById('u-access').value=u.accessLevel; selectedColor=u.color; document.querySelectorAll('.col-sw').forEach(s=>s.classList.toggle('active',s.dataset.c===selectedColor)); document.getElementById('user-modal').classList.add('open'); } }
+  function closeUserModal() { document.getElementById('user-modal').classList.remove('open'); }
+  async function saveUser() { const data = { name:document.getElementById('u-name').value, email:document.getElementById('u-email').value, role:document.getElementById('u-role').value, accessLevel:document.getElementById('u-access').value, color:selectedColor }; try { if(editingUserId) await apiFetch(`/users/${editingUserId}`, { method:'PUT', body:JSON.stringify(data) }); else await apiFetch('/users', { method:'POST', body:JSON.stringify(data) }); toast('User saved', 'success'); closeUserModal(); loadUsersGrid(); } catch(e){ toast('Error: '+e.message, 'error'); } }
+  function openRemoveUser(id) { removeTargetIdx = id; document.getElementById('remove-name').innerText = id; document.getElementById('remove-modal').classList.add('open'); }
+  function closeRemoveModal() { document.getElementById('remove-modal').classList.remove('open'); removeTargetIdx=null; }
+  async function confirmRemove() { if(!removeTargetIdx) return; try { await apiFetch(`/users/${removeTargetIdx}`, { method:'DELETE' }); toast('User removed', 'success'); closeRemoveModal(); loadUsersGrid(); } catch(e){ toast('Delete failed', 'error'); } }
+
+  // Inventory
+  async function loadInventory() { try { const items = await apiFetch('/inventory'); allInventory = items; document.getElementById('inv-grid').innerHTML = items.map(i => `<div class="inv-card ${i.qty < i.min_qty ? 'low' : ''}"><div class="inv-name">${i.name}</div><div class="inv-meta">Stock: ${i.qty} ${i.unit}</div><div class="inv-meta">Min: ${i.min_qty}</div><div><button onclick="openEditInv('${i.id}')">Edit</button> <button onclick="deleteInvItem('${i.id}')">Delete</button></div></div>`).join(''); } catch(e){ toast('Inventory load error', 'error'); } }
+  function openAddInvItem() { const name = prompt('Item name'); if(!name) return; const qty = parseInt(prompt('Quantity')); const min = parseInt(prompt('Min level')); const unit = prompt('Unit'); apiFetch('/inventory', { method:'POST', body:JSON.stringify({ name, qty, min_qty:min, unit }) }).then(()=>loadInventory()).catch(e=>toast(e.message,'error')); }
+  function openEditInv(id) { const i = allInventory.find(i=>i.id===id); if(i){ const newQty = prompt('New quantity', i.qty); if(newQty!==null) apiFetch(`/inventory/${id}`, { method:'PUT', body:JSON.stringify({ ...i, qty:parseInt(newQty) }) }).then(()=>loadInventory()); } }
+  async function deleteInvItem(id) { if(confirm('Delete?')) await apiFetch(`/inventory/${id}`, { method:'DELETE' }); loadInventory(); }
+
+  // Companies
+  async function loadCompanies() { try { const comps = await apiFetch('/companies'); allCompanies = comps; document.getElementById('companies-grid').innerHTML = comps.map(c => `<div class="company-card"><div class="company-name">${c.name}</div><div class="company-code">${c.code}</div><button onclick="editCompany('${c.id}')">Edit</button> <button onclick="deleteCompany('${c.id}')">Delete</button></div>`).join(''); const filter = document.getElementById('co-user-filter'); filter.innerHTML = '<option value="">All Companies</option>' + comps.map(c=>`<option value="${c.id}">${c.name}</option>`).join(''); renderAllUsers(); } catch(e){ toast('Companies error', 'error'); } }
+  function openAddCompany() { const name = prompt('Company name'); if(!name) return; const code = prompt('Short code'); apiFetch('/companies', { method:'POST', body:JSON.stringify({ name, code, color:'#0891b2' }) }).then(()=>loadCompanies()); }
+  async function renderAllUsers() { try { const users = await apiFetch('/users'); const filterCo = document.getElementById('co-user-filter').value; const filtered = filterCo ? users.filter(u=>u.company_id===filterCo) : users; document.getElementById('all-users-tbody').innerHTML = filtered.map(u => `<tr><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td><td>${allCompanies.find(c=>c.id===u.company_id)?.name||'—'}</td><td>${u.accessLevel}</td><td><span onclick="revealPw(this, '${u.password}')">••••</span></td><td><button onclick="removeUserFromCompany('${u.id}')">Remove</button></td></tr>`).join(''); } catch(e){} }
+
+  // Vault
+  async function loadVault() { try { const users = await apiFetch('/users'); document.getElementById('vault-content').innerHTML = `<div class="vault-users-grid">${users.map(u => `<div><strong>${u.name}</strong><br>Password: <span onclick="revealPw(this, '${u.password}')">••••</span></div>`).join('')}</div>`; } catch(e){ toast('Vault error', 'error'); } }
+  function revealPw(el, pw) { el.innerText = pw; setTimeout(()=>el.innerText='••••',5000); }
+
+  // Other placeholders (full implementation would require backend endpoints)
+  function loadProperties() { document.getElementById('properties-grid').innerHTML = '<div>Properties module – backend endpoints needed</div>'; }
+  function loadPM() { document.getElementById('pm-grid').innerHTML = '<div>Preventive Maintenance – backend endpoints needed</div>'; }
+  function loadVendors() { document.getElementById('vendors-grid').innerHTML = '<div>Vendors – backend endpoints needed</div>'; }
+  function loadFinance() { document.getElementById('finance-stats').innerHTML = '<div>Finance – backend endpoints needed</div>'; }
+  function loadReports() { document.getElementById('report-kpis').innerHTML = '<div>Reports – backend endpoints needed</div>'; }
+  function loadPerformance() { document.getElementById('lb-resolved').innerHTML = '<div>Performance – backend endpoints needed</div>'; }
+  function loadSLA() { document.getElementById('sla-tbody').innerHTML = '<tr><td colspan="6">SLA – backend endpoints needed</td></tr>'; }
+  function loadSettings() { /* settings UI already in HTML, just load stored settings */ }
+  function openAddProperty() { toast('Properties endpoint not implemented yet'); }
+  function openAddPM() { toast('PM endpoint not implemented yet'); }
+  function openAddVendor() { toast('Vendors endpoint not implemented yet'); }
+  function openAddBudget() { toast('Finance endpoint not implemented yet'); }
+  function exportExcel() { toast('Export requires backend'); }
+  function exportPDF() { toast('Export requires backend'); }
+  function changePin() { const cur = document.getElementById('cp-cur').value; const nw = document.getElementById('cp-new').value; const cf = document.getElementById('cp-cfm').value; if(cur !== managerPin) { toast('Current PIN incorrect', 'error'); return; } if(nw !== cf) { toast('PINs do not match', 'error'); return; } managerPin = nw; apiFetch('/settings', { method:'PUT', body:JSON.stringify({ manager_pin:nw }) }).then(()=>toast('PIN updated')).catch(e=>toast('Update failed')); }
+  function togSwitch(el,key) { el.classList.toggle('on'); appSettings[key] = el.classList.contains('on'); localStorage.setItem('fixhub_settings', JSON.stringify(appSettings)); if(key==='compact') document.body.classList.toggle('compact-mode', appSettings.compact); }
+
+  function doRefresh() { refreshAll(); }
+  function openMob() { document.getElementById('sb').classList.add('mob-open'); }
+  function toggleSB() { document.getElementById('sb').classList.toggle('col'); }
+  function closeMob() { document.getElementById('sb').classList.remove('mob-open'); }
+  function updateClock() { document.getElementById('live-clock').innerText = new Date().toLocaleTimeString(); }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  document.querySelectorAll('.col-sw').forEach(s => s.addEventListener('click', function(){ document.querySelectorAll('.col-sw').forEach(c=>c.classList.remove('active')); this.classList.add('active'); selectedColor = this.dataset.c; }));
+  document.getElementById('login-btn').onclick = doLogin;
+  document.getElementById('save-ticket-btn').onclick = saveTicket;
+  document.getElementById('user-save-btn').onclick = saveUser;
+  document.querySelectorAll('.nav-item[data-view]').forEach(n => n.addEventListener('click', () => gotoView(n.dataset.view)));
+  document.getElementById('refresh-btn').onclick = doRefresh;
+  (function init() { if(localStorage.getItem('token')) { authToken = localStorage.getItem('token'); apiFetch('/auth/me').then(user => { currentUser = user; document.getElementById('login-screen').style.display = 'none'; document.getElementById('sb').style.visibility = 'visible'; document.getElementById('main').style.visibility = 'visible'; document.getElementById('sb-name').innerText = user.name; document.getElementById('sb-role').innerText = user.role; document.getElementById('sb-av').innerText = user.name.charAt(0); document.getElementById('role-badge').innerText = user.accessLevel === 'manager' ? 'Manager' : 'Technician'; gotoView('dashboard'); refreshAll(); }).catch(() => localStorage.removeItem('token')); } })();
+</script>
 </body>
 </html>
